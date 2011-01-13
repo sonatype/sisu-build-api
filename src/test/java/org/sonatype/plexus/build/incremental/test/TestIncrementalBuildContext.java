@@ -184,6 +184,12 @@ public boolean isIncremental() {
   public void addWarning(File file, int line, int column, String message, Throwable cause) {
   }
 
+  public void removeWarnings(File file) {
+  }
+
+  public void removeErrors(File file) {
+  }
+
   public boolean isUptodate(File target, File source) {
     return target != null && target.exists() && !hasDelta(target)
         && source != null && source.exists() && !hasDelta(source)

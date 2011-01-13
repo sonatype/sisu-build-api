@@ -91,6 +91,14 @@ public class ThreadBuildContext implements BuildContext {
     getContext().setValue(key, value);
   }
 
+  public void removeWarnings(File file) {
+    getContext().removeWarnings(file);
+  }
+
+  public void removeErrors(File file) {
+    getContext().removeErrors(file);
+  }
+
   public void addWarning(File file, int line, int column, String message, Throwable cause) {
     getContext().addWarning(file, line, column, message, cause);
   }

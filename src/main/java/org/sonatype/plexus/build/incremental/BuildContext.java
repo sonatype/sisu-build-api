@@ -37,7 +37,7 @@ public interface BuildContext {
    * Returns <code>true</code> if the file has changed since last build or is not
    * under basedir.
    * 
-   * @since 0.5.0
+   * @since 0.0.5
    */
   boolean hasDelta(File file);
 
@@ -144,16 +144,24 @@ public interface BuildContext {
   Object getValue(String key);
 
   /**
-   * 
-   * @since 0.5.0
+   * @since 0.0.5
    */
   void addWarning(File file, int line, int column, String message, Throwable cause);
 
   /**
-   * 
-   * @since 0.5.0
+   * @since 0.0.7
+   */
+  void removeWarnings(File file);
+
+  /**
+   * @since 0.0.5
    */
   void addError(File file, int line, int column, String message, Throwable cause);
+
+  /**
+   * @since 0.0.7
+   */
+  void removeErrors(File file);
 
   /**
    * Returns true, if the target file exists and is uptodate compared to the source file.
@@ -162,8 +170,7 @@ public interface BuildContext {
    * do not have changes since last incremental build and the target file was last modified
    * later than the source file. Returns false in all other cases.
    * 
-   * @since 0.5.0
+   * @since 0.0.5
    */
   boolean isUptodate(File target, File source);
-
 }

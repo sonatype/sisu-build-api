@@ -83,10 +83,6 @@ public class DefaultBuildContext extends AbstractLogEnabled implements BuildCont
   public void setValue(String key, Object value) {
   }
 
-  public void addWarning(File file, int line, int column, String message, Throwable cause) {
-    getLogger().warn(getMessage(file, line, column, message), cause);
-  }
-
   private String getMessage(File file, int line, int column, String message) {
     StringBuffer sb = new StringBuffer();
     sb.append(file.getAbsolutePath()).append(" [").append(line).append(':').append(column).append("]: ");
@@ -98,8 +94,18 @@ public class DefaultBuildContext extends AbstractLogEnabled implements BuildCont
     getLogger().error(getMessage(file, line, column, message), cause);
   }
 
+  public void addWarning(File file, int line, int column, String message, Throwable cause) {
+    getLogger().warn(getMessage(file, line, column, message), cause);
+  }
+
   public boolean isUptodate(File target, File source) {
     return target != null && target.exists() && source != null && source.exists()
         && target.lastModified() > source.lastModified();
+  }
+
+  public void removeWarnings(File file) {
+  }
+
+  public void removeErrors(File file) {
   }
 }
