@@ -90,22 +90,37 @@ public class DefaultBuildContext extends AbstractLogEnabled implements BuildCont
     return sb.toString();
   }
 
+  /**
+   * @deprecated Use addMessage with severity=SEVERITY_ERROR instead
+   */
   public void addError(File file, int line, int column, String message, Throwable cause) {
-    getLogger().error(getMessage(file, line, column, message), cause);
+    addMessage(file, line, column, message, SEVERITY_ERROR, cause);
   }
 
+  /**
+   * @deprecated Use addMessage with severity=SEVERITY_WARNING instead
+   */
   public void addWarning(File file, int line, int column, String message, Throwable cause) {
-    getLogger().warn(getMessage(file, line, column, message), cause);
+    addMessage(file, line, column, message, SEVERITY_WARNING, cause);
+  }
+
+  public void addMessage(File file, int line, int column, String message, int severity, Throwable cause) {
+    switch(severity) {
+      case BuildContext.SEVERITY_ERROR:
+        getLogger().error(getMessage(file, line, column, message), cause);
+        return;
+      case BuildContext.SEVERITY_WARNING:
+        getLogger().warn(getMessage(file, line, column, message), cause);
+        return;
+    }
+    throw new IllegalArgumentException("severity=" + severity);
+  }
+
+  public void removeMessages(File file) {
   }
 
   public boolean isUptodate(File target, File source) {
     return target != null && target.exists() && source != null && source.exists()
         && target.lastModified() > source.lastModified();
-  }
-
-  public void removeWarnings(File file) {
-  }
-
-  public void removeErrors(File file) {
   }
 }

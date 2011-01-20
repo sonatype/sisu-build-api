@@ -184,10 +184,10 @@ public boolean isIncremental() {
   public void addWarning(File file, int line, int column, String message, Throwable cause) {
   }
 
-  public void removeWarnings(File file) {
+  public void addMessage(File file, int line, int column, String message, int severity, Throwable cause) {
   }
 
-  public void removeErrors(File file) {
+  public void removeMessages(File file) {
   }
 
   public boolean isUptodate(File target, File source) {

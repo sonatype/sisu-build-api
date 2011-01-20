@@ -22,6 +22,9 @@ import org.codehaus.plexus.util.Scanner;
 
 // TODO should it be BuildWorkspace or something like that?
 public interface BuildContext {
+  public static final int SEVERITY_WARNING = 1;
+
+  public static final int SEVERITY_ERROR = 2;
 
   // TODO should we add File getBasedir()?
   
@@ -144,24 +147,37 @@ public interface BuildContext {
   Object getValue(String key);
 
   /**
+   * @deprecated Use addMessage with severity=SEVERITY_ERROR instead
    * @since 0.0.5
    */
   void addWarning(File file, int line, int column, String message, Throwable cause);
 
   /**
-   * @since 0.0.7
-   */
-  void removeWarnings(File file);
-
-  /**
+   * @deprecated Use addMessage with severity=SEVERITY_WARNING instead
    * @since 0.0.5
    */
   void addError(File file, int line, int column, String message, Throwable cause);
 
   /**
+   * Adds a message to the build context. The message is associated with a file and a location inside that file.
+   * 
+   * @param file The file or folder with which the message is associated. Should not be null and it is recommended to be
+   *          an absolute path.
+   * @param line The line number inside the file. Use 1 (not 0) for the first line. Use 0 for unknown/unspecified.
+   * @param column The column number inside the file. Use 1 (not 0) for the first column. Use 0 for unknown/unspecified.
+   * @param severity The severity of the message: SEVERITY_WARNING or SEVERITY_ERROR.
+   * @param cause A Throwable object associated with the message. Can be null.
    * @since 0.0.7
    */
-  void removeErrors(File file);
+  void addMessage(File file, int line, int column, String message, int severity, Throwable cause);
+
+  /**
+   * Removes all messages associated with a file or folder during a previous build. It does not affect the messages
+   * added during the current build.
+   * 
+   * @since 0.0.7
+   */
+  void removeMessages(File file);
 
   /**
    * Returns true, if the target file exists and is uptodate compared to the source file.

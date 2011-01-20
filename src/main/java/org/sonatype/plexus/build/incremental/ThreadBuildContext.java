@@ -91,20 +91,26 @@ public class ThreadBuildContext implements BuildContext {
     getContext().setValue(key, value);
   }
 
-  public void removeWarnings(File file) {
-    getContext().removeWarnings(file);
+  public void addMessage(File file, int line, int column, String message, int severity, Throwable cause) {
+    getContext().addMessage(file, line, column, message, severity, cause);
   }
 
-  public void removeErrors(File file) {
-    getContext().removeErrors(file);
+  public void removeMessages(File file) {
+    getContext().removeMessages(file);
   }
 
+  /**
+   * @deprecated Use addMessage with severity=SEVERITY_WARNING instead
+   */
   public void addWarning(File file, int line, int column, String message, Throwable cause) {
-    getContext().addWarning(file, line, column, message, cause);
+    addMessage(file, line, column, message, BuildContext.SEVERITY_WARNING, cause);
   }
 
+  /**
+   * @deprecated Use addMessage with severity=SEVERITY_ERROR instead
+   */
   public void addError(File file, int line, int column, String message, Throwable cause) {
-    getContext().addError(file, line, column, message, cause);
+    addMessage(file, line, column, message, BuildContext.SEVERITY_ERROR, cause);
   }
 
   public boolean isUptodate(File target, File source) {
