@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.Scanner;
@@ -32,10 +33,8 @@ import org.codehaus.plexus.util.Scanner;
  * newDeletedScanner always returns empty scanner.
  * isIncremental returns <code>false</code<
  * getValue always returns <code>null</code>
- * 
- * @plexus.component role="org.sonatype.plexus.build.incremental.BuildContext"
- *                   role-hint="default"
  */
+@Component(role=BuildContext.class)
 public class DefaultBuildContext extends AbstractLogEnabled implements BuildContext {
 
   public boolean hasDelta(String relpath) {
